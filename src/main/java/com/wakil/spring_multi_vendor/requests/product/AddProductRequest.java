@@ -3,13 +3,11 @@ package com.wakil.spring_multi_vendor.requests.product;
 
 import com.wakil.spring_multi_vendor.model.Product;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddProductRequest {
@@ -19,14 +17,13 @@ public class AddProductRequest {
     private Long quantity;
 
 
-    public Product createProduct(){
+    public Product createProduct() {
         return Product.builder()
                 .name(this.name)
                 .description(this.description)
                 .price(this.price)
                 .quantity(this.quantity)
                 .build();
-
     }
 
 }

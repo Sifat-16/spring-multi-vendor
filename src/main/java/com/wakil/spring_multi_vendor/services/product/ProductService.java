@@ -4,6 +4,7 @@ import com.wakil.spring_multi_vendor.exception.product.ProductNotFoundException;
 import com.wakil.spring_multi_vendor.model.Product;
 import com.wakil.spring_multi_vendor.requests.product.AddProductRequest;
 import com.wakil.spring_multi_vendor.respository.product.ProductRepository;
+import dto.product.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,32 @@ public class ProductService implements ProductServiceImpl {
     final ProductRepository productRepository;
 
     @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product Not Found"));
+    public ProductDto getProductById(Long id) {
+        return productRepository.findById(id).map(Product::createProductDto).orElseThrow(()-> new ProductNotFoundException("Product Not Found"));
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> getAllProducts() {
+        return productRepository.findAll().stream().map(Product::createProductDto).toList();
     }
 
     @Override
-    public Product createProduct(AddProductRequest addProductRequest) {
+    public ProductDto createProduct(AddProductRequest addProductRequest) {
         if(addProductRequest.getName()==null){
             throw new RuntimeException("You haven't added the name MF!!!!");
         }
         Product savedProduct = addProductRequest.createProduct();
-        return productRepository.save(savedProduct);
+
+        return productRepository.save(savedProduct).createProductDto();
     }
 
     @Override
-    public List<Product> getProductByName(String name) {
-        return productRepository.findAllByName(name);
+    public List<ProductDto> getProductByName(String name) {
+        return productRepository.findAllByName(name).stream().map(Product::createProductDto).toList();
+    }
+
+    @Override
+    public List<ProductDto> getProductByNameOrPrice(String name, double price) {
+        return productRepository.findAllByNameOrPrice(name, price).stream().map(Product::createProductDto).toList();
     }
 }
