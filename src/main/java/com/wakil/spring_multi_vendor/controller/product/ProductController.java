@@ -71,4 +71,20 @@ public class ProductController {
 
     }
 
+    @GetMapping("/product-by-price/{price}")
+    public  ResponseEntity<ApiResponse> getProductByPrice (@PathVariable String price){
+
+        try{
+            Product product = productService.getProductByPrice(price);
+            return ResponseEntity.ok(new ApiResponse(
+                    "product by price fetched",
+                    product
+            ));
+        }catch (Exception e){
+
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Internal Server Error", null));
+
+    }
+
 }

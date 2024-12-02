@@ -10,4 +10,5 @@ public interface ProductServiceImpl {
     List<Product> getAllProducts();
     Product createProduct(AddProductRequest addProductRequest);
     List<Product> getProductByName(String name);
+    Product getProductByPrice(String price);
 }
