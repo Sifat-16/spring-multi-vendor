@@ -29,7 +29,7 @@ public class ProductService implements ProductServiceImpl {
     @Override
     public Product createProduct(AddProductRequest addProductRequest) {
         if(addProductRequest.getName()==null){
-            throw new RuntimeException("You haven't added the name MF!!!!");
+            throw new RuntimeException("You haven't added any product!!!!");
         }
         Product savedProduct = addProductRequest.createProduct();
         return productRepository.save(savedProduct);
