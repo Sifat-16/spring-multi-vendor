@@ -11,25 +11,21 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "Product")
-@Table
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Product {
+@Entity
+@Table
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(
-            columnDefinition = "TEXT"
-    )
     private String description;
-    private double price;
-    private Long quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_category_id_updated")
-    @JsonManagedReference
-    private Category category;
+    @OneToMany(mappedBy = "category")
+    @JsonBackReference
+    private List<Product> products;
+
 }

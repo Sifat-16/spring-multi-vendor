@@ -8,5 +8,4 @@ public class SpringMultiVendorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringMultiVendorApplication.class, args);
 	}
-
 }
