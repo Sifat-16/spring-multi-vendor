@@ -1,7 +1,9 @@
 package com.wakil.spring_multi_vendor.requests.product;
 
 
+import com.wakil.spring_multi_vendor.model.Category;
 import com.wakil.spring_multi_vendor.model.Product;
+import com.wakil.spring_multi_vendor.requests.category.AddCategoryRequest;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,7 @@ public class AddProductRequest {
     private String description;
     private double price;
     private Long quantity;
+    private Long categoryId;
 
 
     public Product createProduct(){
