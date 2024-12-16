@@ -9,3 +9,4 @@ public class SpringMultiVendorApplication {
 		SpringApplication.run(SpringMultiVendorApplication.class, args);
 	}
 }
+
