@@ -1,9 +1,6 @@
 package com.wakil.spring_multi_vendor.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -20,4 +17,8 @@ public class Product {
     private String description;
     private double price;
     private Long quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
