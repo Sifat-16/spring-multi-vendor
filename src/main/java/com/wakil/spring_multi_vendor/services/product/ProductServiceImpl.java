@@ -3,6 +3,7 @@ package com.wakil.spring_multi_vendor.services.product;
 import com.wakil.spring_multi_vendor.dto.product.ProductDto;
 import com.wakil.spring_multi_vendor.model.Product;
 import com.wakil.spring_multi_vendor.requests.product.AddProductRequest;
+import com.wakil.spring_multi_vendor.requests.product.UpdateProductRequest;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface ProductServiceImpl {
     ProductDto createProduct(AddProductRequest addProductRequest);
     List<ProductDto> getProductByName(String name);
     List<ProductDto> getProductByPriceRange(double minPrice);
+    ProductDto updateProduct(Long id, UpdateProductRequest updateProductRequest);
 }

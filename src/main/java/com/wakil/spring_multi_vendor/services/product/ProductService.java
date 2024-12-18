@@ -1,11 +1,13 @@
 package com.wakil.spring_multi_vendor.services.product;
 
 import com.wakil.spring_multi_vendor.dto.product.ProductDto;
+import com.wakil.spring_multi_vendor.exception.global.ResourceNotFoundException;
 import com.wakil.spring_multi_vendor.exception.product.ProductNotFoundException;
 import com.wakil.spring_multi_vendor.model.Category;
 import com.wakil.spring_multi_vendor.model.Product;
 import com.wakil.spring_multi_vendor.requests.category.AddCategoryRequest;
 import com.wakil.spring_multi_vendor.requests.product.AddProductRequest;
+import com.wakil.spring_multi_vendor.requests.product.UpdateProductRequest;
 import com.wakil.spring_multi_vendor.respository.product.ProductRepository;
 import com.wakil.spring_multi_vendor.services.category.CategoryService;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,7 @@ public class ProductService implements ProductServiceImpl {
 
     @Override
     public ProductDto getProductById(Long id) {
-        return convertToDto(productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product Not Found")));
+        return convertToDto(productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product Not Found")));
     }
 
     @Override
@@ -40,9 +42,7 @@ public class ProductService implements ProductServiceImpl {
     @Override
     public ProductDto createProduct(AddProductRequest addProductRequest) {
 
-        if(addProductRequest.getName()==null){
-            throw new RuntimeException("You haven't added the name MF!!!!");
-        }
+
 
         Product savedProduct = addProductRequest.createProduct();
         if(addProductRequest.getCategoryId()!=null){
@@ -62,6 +62,19 @@ public class ProductService implements ProductServiceImpl {
     @Override
     public List<ProductDto> getProductByPriceRange(double minPrice) {
         return productRepository.findAllByMinPrice(minPrice).stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public ProductDto updateProduct(Long id, UpdateProductRequest updateProductRequest) {
+        Product product = productRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not found"));
+
+        if(updateProductRequest.getName()!=null){
+            product.setName(updateProductRequest.getName());
+        }
+        if(updateProductRequest.getDescription()!=null){
+            product.setDescription(updateProductRequest.getDescription());
+        }
+        return convertToDto(productRepository.save(product));
     }
 
     public ProductDto convertToDto(Product product){
