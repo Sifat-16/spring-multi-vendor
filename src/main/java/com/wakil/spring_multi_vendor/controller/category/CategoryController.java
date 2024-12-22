@@ -19,7 +19,7 @@ public class CategoryController {
 
     final CategoryService categoryService;
 
-    @GetMapping("/get-all-category/}")
+    @GetMapping("/get-all-category")
     public ResponseEntity<ApiResponse> getAllCategory() {
         try {
             List<Category> all_categories = categoryService.getAllCategories();
